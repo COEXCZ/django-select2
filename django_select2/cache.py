@@ -14,10 +14,17 @@ It is advised to always setup a separate cache server for Select2.
 """
 from __future__ import absolute_import, unicode_literals
 
-from django.core.cache import caches
 
 from .conf import settings
 
 __all__ = ('cache', )
 
-cache = caches[settings.SELECT2_CACHE_BACKEND]
+try:
+	from django.core.cache import caches
+	cache = caches[settings.SELECT2_CACHE_BACKEND]
+except ImportError:
+	from django.core.cache import get_cache
+	cache = get_cache(settings.SELECT2_CACHE_BACKEND)
+
+
+
