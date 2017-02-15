@@ -15,6 +15,9 @@
                     };
                 },
                 processResults: function (data, page) {
+                    if (typeof data === 'string' || data instanceof String) {
+                        data = JSON.parse(data);
+                    }
                     return {
                         results: data.results,
                         pagination: {
